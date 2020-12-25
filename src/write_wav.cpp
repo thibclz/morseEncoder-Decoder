@@ -15,6 +15,9 @@ Build and write the wav file from a string that countains a morse code coded wit
 the nomenclature specified in "fr_to_m.cpp"
 
 Find the WAV nomenclature there http://soundfile.sapp.org/doc/WaveFormat/
+
+CREDIT to Safayet Ahmed for this implementation (https://stackoverflow.com/a/23036909)
+that is the base of this file
 */
 
 

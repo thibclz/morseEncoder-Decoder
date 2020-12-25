@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <map>
 #include <fstream>
@@ -10,9 +9,11 @@ This file is the implementation of the program which takes a alphabetic string a
 This morse code is not based on the lenth of "ti" and "taah" but is closer to the signal : a ti reprensents one time ("1"), a taah 3 times
 ("111"), between each ti and taah there is a one time pause ("0"), a 3 times pause ("000") between each letter and a 6 times pause ("0000000")
 between each word on the wiki page of the morse code https://fr.wikipedia.org/wiki/Code_Morse_international
+
+By using this method, we can easily find the duration of the output
 */
 
-
+//take a text string (alphabetic) and returns it's corresponding string in morse according to the nomenclature above
 std::string convert_to_morse(std::string str) {
     std::map<char, std::string> fr_to_m; //creating the map to go from a alphabetic letter to morse code
     fr_to_m[' '] = "000";
@@ -56,7 +57,6 @@ std::string convert_to_morse(std::string str) {
     std::string morse;
     
     for ( std::string::iterator it=str.begin(); it!=str.end(); ++it) { //it is a pointer which points every letter ardress from the string one by one 
-        std::cout << *it << std::endl;
         morse += fr_to_m[*it];
         morse += "000";
     }

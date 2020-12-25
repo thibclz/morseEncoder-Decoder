@@ -9,4 +9,4 @@ to change
 
 extern float output_frequency = 800; //frequency of the morse wav, must stay under 4000Hz in order to respect Shannon's criteria
 
-extern float tick_time = 0.1; //time of a beep
+extern float tick_time = 0.2; //time of a beep

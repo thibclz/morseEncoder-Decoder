@@ -3,6 +3,8 @@
 #include <fstream>
 #include "../include/fr_to_m.h"
 
+#include <iostream>
+
 /*
 This file is the implementation of the program which takes a alphabetic string as argument and outputs a string with the morse code
 
@@ -20,8 +22,8 @@ std::string convert_to_morse(std::string str) {
     fr_to_m['a'] = "10111";
     fr_to_m['b'] = "111010101";
     fr_to_m['c'] = "11101011101";
-    fr_to_m['d'] = "1";
-    fr_to_m['e'] = "101011101";
+    fr_to_m['d'] = "1110101";
+    fr_to_m['e'] = "1";
     fr_to_m['f'] = "101011101";
     fr_to_m['g'] = "111011101";
     fr_to_m['h'] = "1010101";
@@ -43,7 +45,7 @@ std::string convert_to_morse(std::string str) {
     fr_to_m['x'] = "11101010111";
     fr_to_m['y'] = "1110101110111";
     fr_to_m['z'] = "11101110101";
-    fr_to_m['0'] = "11101110111011101110111";
+    fr_to_m['0'] = "1110111011101110111";
     fr_to_m['1'] = "10111011101110111";
     fr_to_m['2'] = "101011101110111";
     fr_to_m['3'] = "1010101110111";
@@ -61,4 +63,25 @@ std::string convert_to_morse(std::string str) {
         morse += "000";
     }
     return morse;
+}
+
+
+std::string get_string(char* path) {
+
+    std::string str;
+
+    //opening the file specified as second argument
+    std::ifstream file;
+    file.open(path);
+
+    char c ;
+
+    while (file.get(c)) { 
+
+        str += c;
+    }
+
+    file.close();
+
+    return str;
 }

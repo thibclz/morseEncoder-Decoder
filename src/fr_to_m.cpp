@@ -6,7 +6,7 @@
 #include <iostream>
 
 /*
-This file is the implementation of the program which takes a alphabetic string as argument and outputs a string with the morse code
+This file is the implementation of the program that takes a alphabetic string as argument and outputs a string with the morse code
 
 This morse code is not based on the lenth of "ti" and "taah" but is closer to the signal : a ti reprensents one time ("1"), a taah 3 times
 ("111"), between each ti and taah there is a one time pause ("0"), a 3 times pause ("000") between each letter and a 6 times pause ("0000000")

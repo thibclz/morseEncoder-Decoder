@@ -30,27 +30,27 @@ that is the base of this file
 typedef struct wavfile_header_s //structur of the header of the WAV file
 {
     char    ChunkID[4] = {'R', 'I', 'F', 'F'};
-    int32_t ChunkSize; //depends on the size of the two chunck and the size on the 2nd chunck depends on the data
+    int     ChunkSize; //depends on the size of the two chunck and the size on the 2nd chunck depends on the data
     char    Format[4] = {'W', 'A', 'V', 'E'};
 
     char    Subchunk1ID[4] = {'f', 'm', 't', ' '};
-    int32_t Subchunk1Size = 16;
-    int16_t AudioFormat = 1; //for PCM
-    int16_t NumChannels = 1; //for mono output
-    int32_t SampleRate = 8000; //as it's juste a sequence of beeps lets reduce the size of the file, 8kHz is more than enough 
-    int32_t ByteRate = 8000*1*8/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
-    int16_t BlockAlign = 1*8/8; //= NumChannels*BitsPerSample/8
-    int16_t BitsPerSample = 16;  //once more, 16bits is more than enough for beeps
+    int     Subchunk1Size = 16;
+    short   AudioFormat = 1; //for PCM
+    short   NumChannels = 1; //for mono output
+    int     SampleRate = 8000; //as it's juste a sequence of beeps lets reduce the size of the file, 8kHz is more than enough 
+    int     ByteRate = 8000*1*8/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
+    short   BlockAlign = 1*8/8; //= NumChannels*BitsPerSample/8
+    short   BitsPerSample = 16;  //once more, 16bits is more than enough for beeps
 
     char    Subchunk2ID[4] = {'d', 'a', 't', 'a'};
-    int32_t Subchunk2Size; // = duration*SampleRate*NumChannels*BitsPerSample/8 and duration depend on the input given
+    int     Subchunk2Size; // = duration*SampleRate*NumChannels*BitsPerSample/8 and duration depend on the input given
 } wavfile_header_t;
 
 
 
 typedef struct mono_s //support for the data
 {
-    int16_t track;
+    short track;
 } mono_t;
 
 
@@ -91,13 +91,13 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t 
     // std::ofstream myfile;
     // myfile.open ("example.csv");
   
-    for(int32_t k = 0; k < nb_of_samples; k++) {
+    for(int k = 0; k < nb_of_samples; k++) {
     
         // std::cout << num_c << std::endl;
         double t = (double)k/(double)SampleRate;
 
         if (str[num_c] == '0') {
-            pbuffer[k].track = (int16_t)0;
+            pbuffer[k].track = (short)0;
 
         }
 
@@ -105,7 +105,7 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t 
 
             double sin_value = sin((double)(2*3.14*output_frequency*t));
 
-            pbuffer[k].track = (int16_t)(sin_value*amplitude);
+            pbuffer[k].track = (short)(sin_value*amplitude);
 
         }
     if (t >= (num_c+1)*tick_time) { //when we finish a tick we go to the next character

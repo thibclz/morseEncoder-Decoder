@@ -6,13 +6,15 @@
 
 #include "fr_to_m.h"
 #include "write_wav.h"
+#include "read_wav.h"
 
 int main(int argc, char* argv[]) {
 
     if (!strcmp(argv[1], (char*)"from_morse")) {
 
-        perror( "ERROR : not done yet");
-        return 1;
+        Signal signal(argv[2]);
+
+        return 0;
     }
 
     else if (!strcmp(argv[1], (char*)"to_morse")) {
@@ -21,7 +23,7 @@ int main(int argc, char* argv[]) {
 
         std::string morse = convert_to_morse(str);
 
-        write_wav(morse,(char*)"../morse.wav");
+        write_wav(morse, argv[3]);
 
         return 0;
     }

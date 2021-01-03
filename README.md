@@ -10,7 +10,7 @@ This is a school project, the aim is to create a C++ programm which can take a t
 * go on the build/ folder with `$ cd build`
 * type `$ cmake ..` to create a makefile with CMake
 * type make to build compile the project 
-* run the project with `./morse_code to_morse TXTPATH WAVPATH` to translate a .txt file in the directory TXTPATH to a morse wav in the directory WAVPATH
+* run the project with `./morse_code to_morse TXTPATH WAVPATH` to translate a .txt file in the directory TXTPATH to a morse wav in the directory WAVPATH the morse wav must be mono.
 * or run the project with `./morse_code from_morse WAVPATH TXTPATH` to translate a .wav file in morse to a txt file in the directory TXTPATH
 
 ## Note :

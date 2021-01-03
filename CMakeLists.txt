@@ -8,7 +8,7 @@ enable_testing()
 
 include_directories(include)
 
-set(SOURCES src/fr_to_m.cpp src/write_wav.cpp include/fr_to_m.h include/write_wav.h)
+set(SOURCES src/fr_to_m.cpp src/write_wav.cpp src/read_wav.cpp include/fr_to_m.h include/write_wav.h include/read_wav.h)
 
 add_executable(morse_code main.cpp ${SOURCES})
 

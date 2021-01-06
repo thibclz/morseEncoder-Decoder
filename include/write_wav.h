@@ -4,10 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
-#include <iostream>
-#include <string>
-#include <cmath>
-#include <fstream>
+#pragma once
 
 
 typedef struct wavfile_header_s wavfile_header_t;

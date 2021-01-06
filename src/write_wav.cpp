@@ -38,8 +38,8 @@ typedef struct wavfile_header_s //structur of the header of the WAV file
     short   AudioFormat = 1; //for PCM
     short   NumChannels = 1; //for mono output
     int     SampleRate = 8000; //as it's juste a sequence of beeps lets reduce the size of the file, 8kHz is more than enough 
-    int     ByteRate = 8000*1*8/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
-    short   BlockAlign = 1*8/8; //= NumChannels*BitsPerSample/8
+    int     ByteRate = 8000*1*16/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
+    short   BlockAlign = 1*16/8; //= NumChannels*BitsPerSample/8
     short   BitsPerSample = 16;  //once more, 16bits is more than enough for beeps
 
     char    Subchunk2ID[4] = {'d', 'a', 't', 'a'};
@@ -81,6 +81,7 @@ void  write_WAV_data(FILE* pfile, int nb_of_samples, mono_t *pbuffer) {
 }
 
 
+
 //creating a signal of beeps at the frequency specified in "../include/settings.h" with the beeps corresponding to the string given
 void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t *pbuffer, std::string str) {
 
@@ -108,7 +109,7 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t 
             pbuffer[k].track = (short)(sin_value*amplitude);
 
         }
-    if (t >= (num_c+1)*tick_time) { //when we finish a tick we go to the next character
+    if (t >= (num_c+1)*output_tick_time) { //when we finish a tick we go to the next character
         num_c++;
     }
 
@@ -127,12 +128,9 @@ void write_wav(std::string morse, char* path) {
 
     int duration; //duration of the .wav file
 
-    duration = (int)(morse.length()*tick_time)+1; //rounded to superior value
+    duration = (int)(morse.length()*output_tick_time)+1; //rounded to superior value
 
     FILE* pfile;
-
-    float amplitude = 0.65 * (float)SHRT_MAX; //arbitrary initial volume
-
 
     wavfile_header_t wav_header;
 
@@ -146,7 +144,7 @@ void write_wav(std::string morse, char* path) {
     pbuffer = allocate_buffer(nb_of_samples);
 
     //filing this allocated memory
-    generate_signal(amplitude, wav_header.SampleRate, nb_of_samples, pbuffer, morse);
+    generate_signal(output_amplitude, wav_header.SampleRate, nb_of_samples, pbuffer, morse);
 
     //writing the wav file header
     write_WAV_header(pfile, nb_of_samples, wav_header);

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 This file contains every global variables and settingyou might want
 to change
@@ -7,6 +9,16 @@ to change
 
 //OUTPUT
 
-extern float output_frequency = 800; //frequency of the morse wav, must stay under 4000Hz in order to respect Shannon's criteria
+const float output_amplitude = 0.65 * (float)32767; //arbitrary initial volume
 
-extern float tick_time = 0.2; //time of a beep
+const float output_frequency = 800; //frequency of the morse wav, must stay under 4000Hz in order to respect Shannon's criteria
+
+const float output_tick_time = 0.2; //time of a beep
+
+//INPUT
+
+const float input_frequency = 800;
+
+const float input_tick_time = 0.2;
+
+const float input_amplitude = 0.65 * (float)32767; 

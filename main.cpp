@@ -12,8 +12,12 @@ int main(int argc, char* argv[]) {
 
     if (!strcmp(argv[1], (char*)"from_morse")) {
 
-        Signal signal(argv[2]);
+        Signal signal(argv[2], 0.2);
 
+        signal.letter_separator();
+
+        signal.translate();
+        
         return 0;
     }
 

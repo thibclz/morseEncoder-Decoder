@@ -16,3 +16,4 @@ This is a school project, the aim is to create a C++ programm which can take a t
 ## Note :
 * /!\ WARNING : TXTPATH and WAVPATH are directories relative to build/
 * You can delete the build by going to build/ and type `$ rm -rf *`
+* This program doesn't work with special characters (à, &, é, and so on...)

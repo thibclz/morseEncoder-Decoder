@@ -7,14 +7,11 @@ higher than the mean : it is a 1, else it is a 0 as the signal is flat when it i
 so the absolute integer us higher than the mean
 */
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <limits.h>
 #include <iostream>
 #include <string>
-#include <cmath>
 #include <fstream>
 #include <vector>
+#include <cstring>
 
 #include "../include/settings.h"
 #include "../include/read_wav.h"
@@ -167,6 +164,7 @@ void Signal::letter_separator(void) //separating letters (and spaces too that ar
         if (zero_counter == 3) //end of letter detected : appening the last one
         {
             to_append.erase();
+
             for (cursor ; cursor < i-2 ; cursor++)
             {
                 to_append += signal[cursor];
@@ -174,6 +172,14 @@ void Signal::letter_separator(void) //separating letters (and spaces too that ar
 
             letters.emplace_back(to_append);
             cursor = cursor + 3;
+
+            if (signal[i+1] == '0') //the newt letter must be a space ("000")
+            {
+                letters.emplace_back("000");
+                i = i + 3; //skipping the "000"
+                cursor = cursor + 3;
+            }
+
             zero_counter = 0;
         }
 
@@ -182,11 +188,23 @@ void Signal::letter_separator(void) //separating letters (and spaces too that ar
 
 void Signal::translate(void) 
 {
-    std::string result = convert_to_alphabet(letters);
+    result = convert_to_alphabet(letters);
 
 }
 
-void Signal::show_and_save(void)
+void Signal::show_and_save(char* directory)
 {
+    std::cout << result << std::endl; //printing the result in terminal
     
+    std::ofstream file(directory);
+
+    int size = result.length() + 1;
+
+    for (int i = 0; i < size; i++)
+    {
+        file << result[i];
+
+        if (result[i] == ' ') i++; //solving a problem with space encoding
+        
+    }
 }

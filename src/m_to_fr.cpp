@@ -1,8 +1,9 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "m_to_fr.h"
 #include <iostream>
+
+#include "m_to_fr.h"
 
 
 std::string convert_to_alphabet(std::vector<std::string> vect) 
@@ -16,14 +17,14 @@ std::string convert_to_alphabet(std::vector<std::string> vect)
     m_to_fr["111010101"] = 'b';
     m_to_fr["11101011101"] = 'c';
     m_to_fr["1110101"] = 'd';
-    m_to_fr["1"] = 'd';
+    m_to_fr["1"] = 'e';
     m_to_fr["101011101"] = 'f';
     m_to_fr["111011101"] = 'g';
     m_to_fr["1010101"] = 'h';
     m_to_fr["101"] = 'i';
     m_to_fr["1011101110111"] = 'j';
     m_to_fr["111010111"] = 'k';
-    m_to_fr["101110101"] = 'i';
+    m_to_fr["101110101"] = 'l';
     m_to_fr["1110111"] = 'm';
     m_to_fr["11101"] = 'n';
     m_to_fr["11101110111"] = 'o';

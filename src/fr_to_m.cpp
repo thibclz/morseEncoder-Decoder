@@ -1,9 +1,9 @@
 #include <string>
 #include <map>
 #include <fstream>
-#include "../include/fr_to_m.h"
-
 #include <iostream>
+
+#include "../include/fr_to_m.h"
 
 /*
 This file is the implementation of the program that takes a alphabetic string as argument and outputs a string with the morse code

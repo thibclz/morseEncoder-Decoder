@@ -10,18 +10,20 @@
 
 int main(int argc, char* argv[]) {
 
-    if (!strcmp(argv[1], (char*)"from_morse")) {
+    if (!strcmp(argv[1], (char*)"from_morse")) { //with object
 
         Signal signal(argv[2], 0.2);
 
         signal.letter_separator();
 
         signal.translate();
+    
+        signal.show_and_save(argv[3]);
         
         return 0;
     }
 
-    else if (!strcmp(argv[1], (char*)"to_morse")) {
+    else if (!strcmp(argv[1], (char*)"to_morse")) { //without object
 
         std::string str = get_string(argv[2]);
 

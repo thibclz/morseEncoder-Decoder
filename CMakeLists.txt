@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(morse_code VERSION 0.1.0)
 
-include(CTest)
-enable_testing()
-
-
-
 include_directories(include)
 
 set(SOURCES src/m_to_fr.cpp src/fr_to_m.cpp src/write_wav.cpp src/read_wav.cpp include/m_to_fr.h include/fr_to_m.h include/write_wav.h include/read_wav.h)

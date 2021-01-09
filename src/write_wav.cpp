@@ -56,7 +56,7 @@ typedef struct mono_s //support for the data
 
 mono_t *allocate_buffer(int32_t nb_of_samples) //allow to allocate the memory for the data in the computer
 {
-    return (mono_t *)malloc(sizeof(mono_t) * nb_of_samples);
+    return new mono_t[nb_of_samples];
 }
 
 

@@ -9,7 +9,7 @@
 This file is the implementation of the program that takes a alphabetic string as argument and outputs a string with the morse code
 
 This morse code is not based on the lenth of "ti" and "taah" but is closer to the signal : a ti reprensents one time ("1"), a taah 3 times
-("111"), between each ti and taah there is a one time pause ("0"), a 3 times pause ("000") between each letter and a 6 times pause ("0000000")
+("111"), between each ti and taah there is a one time pause ("0"), a 3 times pause ("000") between each letter and a 9 times pause ("00000000")
 between each word on the wiki page of the morse code https://fr.wikipedia.org/wiki/Code_Morse_international
 
 By using this method, we can easily find the duration of the output
@@ -59,7 +59,7 @@ std::string convert_to_morse(std::string str) {
     std::string morse;
     
     for ( std::string::iterator it=str.begin(); it!=str.end(); ++it) { //it is a pointer which points every letter ardress from the string one by one 
-        morse += fr_to_m[*it];
+        morse += fr_to_m[tolower(*it)]; //converting capitals to lower and then to morse
         morse += "000";
     }
     return morse;

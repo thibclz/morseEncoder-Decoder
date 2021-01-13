@@ -9,6 +9,7 @@
 
 #include "../include/settings.h"
 #include "../include/write_wav.h"
+#include "../include/wav_header.h"
 
 /*
 Build and write the wav file from a string that countains a morse code coded with
@@ -25,65 +26,44 @@ that is the base of this file
 
 
 
-//First we declare the two structures we need to create the .wav
 
-typedef struct wavfile_header_s //structur of the header of the WAV file
+
+// typedef struct mono_s //support for the data
+// {
+//     short track;
+// } mono_t;
+
+
+short* allocate_buffer(int nb_of_samples) //allow to allocate the memory for the data in the computer
 {
-    char    ChunkID[4] = {'R', 'I', 'F', 'F'};
-    int     ChunkSize; //depends on the size of the two chunck and the size on the 2nd chunck depends on the data
-    char    Format[4] = {'W', 'A', 'V', 'E'};
-
-    char    Subchunk1ID[4] = {'f', 'm', 't', ' '};
-    int     Subchunk1Size = 16;
-    short   AudioFormat = 1; //for PCM
-    short   NumChannels = 1; //for mono output
-    int     SampleRate = 8000; //as it's juste a sequence of beeps lets reduce the size of the file, 8kHz is more than enough 
-    int     ByteRate = 8000*1*16/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
-    short   BlockAlign = 1*16/8; //= NumChannels*BitsPerSample/8
-    short   BitsPerSample = 16;  //once more, 16bits is more than enough for beeps
-
-    char    Subchunk2ID[4] = {'d', 'a', 't', 'a'};
-    int     Subchunk2Size; // = duration*SampleRate*NumChannels*BitsPerSample/8 and duration depend on the input given
-} wavfile_header_t;
-
-
-
-typedef struct mono_s //support for the data
-{
-    short track;
-} mono_t;
-
-
-mono_t *allocate_buffer(int32_t nb_of_samples) //allow to allocate the memory for the data in the computer
-{
-    return new mono_t[nb_of_samples];
+    return new short[nb_of_samples];
 }
 
 
 
 
 //writing the headers on the .wav file
-void write_WAV_header(FILE* pfile, int nb_of_samples, wavfile_header_t wav_header) {
+void write_WAV_header(FILE* pfile, int nb_of_samples, wav_header header) {
 
-    wav_header.Subchunk2Size  = 8 + nb_of_samples*wav_header.NumChannels*wav_header.BitsPerSample/8;
+    header.Subchunk2Size  = 8 + nb_of_samples*header.NumChannels*header.BitsPerSample/8;
 
-    wav_header.ChunkSize = 4 + (8 + wav_header.Subchunk1Size) + (8 + wav_header.Subchunk2Size); //size of the three chuncks added = size of the header
+    header.ChunkSize = 4 + (8 + header.Subchunk1Size) + (8 + header.Subchunk2Size); //size of the three chuncks added = size of the header
 
-    fwrite(&wav_header, sizeof(wavfile_header_t), 1, pfile); //write the value of wav_header in pfile in one block of sizeof(...) size
+    fwrite(&header, sizeof(wav_header), 1, pfile); //write the value of wav_header in pfile in one block of sizeof(...) size
 }
 
 
 //writing the data from the buffer to the .wav file
-void  write_WAV_data(FILE* pfile, int nb_of_samples, mono_t *pbuffer) {
+void  write_WAV_data(FILE* pfile, int nb_of_samples, short *pbuffer) {
    
-    fwrite(pbuffer, sizeof(mono_t), nb_of_samples, pfile);
+    fwrite(pbuffer, sizeof(short), nb_of_samples, pfile);
 
 }
 
 
 
 //creating a signal of beeps at the frequency specified in "../include/settings.h" with the beeps corresponding to the string given
-void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t *pbuffer, std::string str) {
+void generate_signal(float amplitude, int SampleRate, int nb_of_samples, short* pbuffer, std::string str) {
 
     int num_c = 0;
 
@@ -98,15 +78,14 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, mono_t 
         double t = (double)k/(double)SampleRate;
 
         if (str[num_c] == '0') {
-            pbuffer[k].track = (short)0;
+            pbuffer[k] = (short)0;
 
         }
-
         else if (str[num_c] == '1') {
 
             double sin_value = sin((double)(2*3.14*output_frequency*t));
 
-            pbuffer[k].track = (short)(sin_value*amplitude);
+            pbuffer[k] = (short)(sin_value*amplitude);
 
         }
     if (t >= (num_c+1)*output_tick_time) { //when we finish a tick we go to the next character
@@ -132,11 +111,12 @@ void write_wav(std::string morse, char* path) {
 
     FILE* pfile;
 
-    wavfile_header_t wav_header;
+    wav_header header;
+    header.default_value();
 
-    int nb_of_samples = duration*wav_header.SampleRate;
+    int nb_of_samples = duration*header.SampleRate;
 
-    mono_t *pbuffer = NULL;
+    short* pbuffer = NULL;
 
     pfile = fopen(path, "w");
 
@@ -144,10 +124,10 @@ void write_wav(std::string morse, char* path) {
     pbuffer = allocate_buffer(nb_of_samples);
 
     //filing this allocated memory
-    generate_signal(output_amplitude, wav_header.SampleRate, nb_of_samples, pbuffer, morse);
+    generate_signal(output_amplitude, header.SampleRate, nb_of_samples, pbuffer, morse);
 
     //writing the wav file header
-    write_WAV_header(pfile, nb_of_samples, wav_header);
+    write_WAV_header(pfile, nb_of_samples, header);
 
     //writing the data stored in the buffer
     write_WAV_data(pfile, nb_of_samples, pbuffer);

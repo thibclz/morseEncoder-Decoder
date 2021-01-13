@@ -3,9 +3,10 @@ project(morse_code VERSION 0.1.0)
 
 include_directories(include)
 
-set(SOURCES src/m_to_fr.cpp src/fr_to_m.cpp src/write_wav.cpp src/read_wav.cpp include/m_to_fr.h include/fr_to_m.h include/write_wav.h include/read_wav.h)
+file(GLOB src "src/*.cpp")
+file(GLOB include "include/*.h")
 
-add_executable(morse_code main.cpp ${SOURCES})
+add_executable(morse_code main.cpp ${src})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

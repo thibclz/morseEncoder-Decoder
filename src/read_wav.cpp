@@ -16,26 +16,7 @@ so the absolute integer us higher than the mean
 #include "../include/settings.h"
 #include "../include/read_wav.h"
 #include "../include/m_to_fr.h"
-
-
-typedef struct wav_header_s //définit la structure de l entete d un wave
-{
-    char    ChunkID[4];
-    int     ChunkSize; 
-    char    Format[4];
-
-    char    Subchunk1ID[4];
-    int     Subchunk1Size;
-    short   AudioFormat;
-    short   NumChannels;
-    int     SampleRate;
-    int     ByteRate;
-    short   BlockAlign;
-    short   BitsPerSample;
-
-    char    Subchunk2ID[4];
-    int     Subchunk2Size;
-} wav_header_t;
+#include "../include/wav_header.h"
 
 
 std::string signal;
@@ -48,7 +29,7 @@ Signal::Signal(char* wavpath, float tick)  //read the .wav in wavpath directory 
 {
     FILE*        pfile;
     char*        mystring;
-    wav_header_t header;
+    wav_header header;
 
 
 

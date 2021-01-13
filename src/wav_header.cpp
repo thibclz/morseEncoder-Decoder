@@ -46,9 +46,9 @@ void wav_header::default_value()
     AudioFormat = 1; //for PCM
     NumChannels = 1; //for mono output
     SampleRate = 8000; //as it's juste a sequence of beeps lets reduce the size of the file, 8kHz is more than enough 
-    ByteRate = 8000*1*16/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
-    BlockAlign = 1*16/8; //= NumChannels*BitsPerSample/8
-    BitsPerSample = 16;  //once more, 16bits is more than enough for beeps
+    ByteRate = 8000*1*8/8; //= NumChannels*SampleRate*BitsPerSample/8 to go from Bits of info per sec to Bytes per second
+    BlockAlign = 1*8/8; //= NumChannels*BitsPerSample/8
+    BitsPerSample = 8;  //once more, 16bits is more than enough for beeps
 
     Subchunk2ID[0] = 'd';
     Subchunk2ID[1] = 'a';

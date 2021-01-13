@@ -23,9 +23,9 @@ that is the base of this file
 
 
 //allow to allocate the memory for the data in the computer
-short* allocate_buffer(int nb_of_samples)
+char* allocate_buffer(int nb_of_samples)
 {
-    return new short[nb_of_samples];
+    return new char[nb_of_samples];
 }
 
 
@@ -42,16 +42,16 @@ void write_WAV_header(FILE* pfile, int nb_of_samples, wav_header header) {
 
 
 //writing the data from the buffer to the .wav file
-void  write_WAV_data(FILE* pfile, int nb_of_samples, short *pbuffer) {
+void  write_WAV_data(FILE* pfile, int nb_of_samples, char *pbuffer) {
    
-    fwrite(pbuffer, sizeof(short), nb_of_samples, pfile);
+    fwrite(pbuffer, sizeof(char), nb_of_samples, pfile);
 
 }
 
 
 
 //creating a signal of beeps at the frequency specified in "../include/settings.h" with the beeps corresponding to the string given
-void generate_signal(float amplitude, int SampleRate, int nb_of_samples, short* pbuffer, std::string str) {
+void generate_signal(float amplitude, int SampleRate, int nb_of_samples, char* pbuffer, std::string str) {
 
     int num_c = 0;
 
@@ -64,7 +64,7 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, short* 
 
         if (str[num_c] == '0') 
         {
-            pbuffer[k] = (short)0;
+            pbuffer[k] = (char)127;
         }
 
         else if (str[num_c] == '1') 
@@ -72,7 +72,7 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, short* 
 
             double sin_value = sin((double)(2*3.14*output_frequency*t));
 
-            pbuffer[k] = (short)(sin_value*amplitude);
+            pbuffer[k] = (char)(sin_value*amplitude+127);
 
         }
 
@@ -100,7 +100,7 @@ void write_wav(std::string morse, char* path) {
 
     int nb_of_samples = duration*header.SampleRate;
 
-    short* pbuffer = NULL;
+    char* pbuffer = NULL;
 
     pfile = fopen(path, "w");
 

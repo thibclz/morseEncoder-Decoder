@@ -53,7 +53,7 @@ Signal::Signal(char* wavpath, float tick)
     //the number of samples is the size of the data chunk divided by the size of a sample
     int    nb_samples = (int)(header.Subchunk2Size/header.BlockAlign);
     int    sample_value ; //even if the values are float, for the following usage we can use int (easier because the wav is in 16bits)
-    int    tab[nb_samples]; //this array will countain the samples
+    char   tab[nb_samples]; //this array will countain the samples
     int    i = 0;
     int    samples_by_tick = (int)(tick*header.SampleRate); 
     int    nb_ticks = (int)(nb_samples/samples_by_tick);
@@ -65,18 +65,21 @@ Signal::Signal(char* wavpath, float tick)
     while (fread(&sample_value, header.BitsPerSample/8, 1, pfile))
     {
         tab[i] = sample_value;
+        
+        // std::cout << tab[i] << std::endl;
         i++;
     }
     
 
-    float weight[nb_ticks];//stores the weight of eah tick that is the 
-    signed short int value; //in order to get 16bits signed int and 0 as mean
-
+    long weight[nb_ticks];//stores the weight of eah tick that is the 
+    char value; //in order to get 16bits signed int and 0 as mean
+    long big_mean = 0;
 
     //browsing the data countained in the wav
     for (int i = 0 ; i < nb_ticks ; i++) 
     {
         weight[i] = 0; //reseting the memory just in case
+
         for (int j = 0 ; j < samples_by_tick ; j++)
         {
             value = tab[i*samples_by_tick + j]; //setting the global mean to 0
@@ -85,26 +88,34 @@ Signal::Signal(char* wavpath, float tick)
             if (value < 0) {
 
                 weight[i] = weight[i] - value;
-                
+                big_mean = big_mean - value;
             } 
             else {
+
+                big_mean = big_mean + value;
                 weight[i] = weight[i] + value;
             }
-
-        weight[i] = weight[i];
 
         }
         
     }
 
+    long mean = 0;
 
+    for(int j = 0; j < nb_ticks; j++)
+    {
+        mean = weight[j];
+    }
 
+    std::cout << mean << std::endl;
+
+    big_mean = big_mean/nb_ticks;
 
     //using the method described in the begining to highs and lows in the signal
     for (int i = 0 ; i < nb_ticks ; i++) 
     {
-
-        if (weight[i] < input_frequency*input_tick_time*input_amplitude) //arbitrary threshold to detect if the tick is on or off
+        if (weight[i] > big_mean) //arbitrary threshold to detect if the tick is on or off
+        //for a reason i can't explain it is a 1 when we are under the big_mean when dealing with a 8bit file
         {
             signal += "0";
         }

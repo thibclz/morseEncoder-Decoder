@@ -9,7 +9,7 @@ to change
 
 //OUTPUT
 
-const float output_amplitude = 0.65 * (float)32767; //arbitrary initial volume
+const float output_amplitude = 0.65 * (float)127; //arbitrary initial volume
 
 const float output_frequency = 800; //frequency of the morse wav, must stay under 4000Hz in order to respect Shannon's criteria
 

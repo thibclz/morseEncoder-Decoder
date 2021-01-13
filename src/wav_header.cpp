@@ -1,5 +1,7 @@
 #include "../include/wav_header.h"
 
+/* This file implement an objet that stores the structure of a wav file header and has 
+a method to set default values */
 
 char    ChunkID[4];
 int     ChunkSize; 
@@ -22,7 +24,7 @@ wav_header::wav_header(void) {}
 wav_header::~wav_header(void){}
 
 
-
+//setting default values that work well for the wav writing function
 void wav_header::default_value() 
 {
     ChunkID[0] = 'R';

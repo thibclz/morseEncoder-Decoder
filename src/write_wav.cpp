@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
-#include <iostream>
 #include <string>
 #include <cmath>
 #include <fstream>
@@ -23,22 +22,11 @@ that is the base of this file
 
 
 
-
-
-
-
-
-// typedef struct mono_s //support for the data
-// {
-//     short track;
-// } mono_t;
-
-
-short* allocate_buffer(int nb_of_samples) //allow to allocate the memory for the data in the computer
+//allow to allocate the memory for the data in the computer
+short* allocate_buffer(int nb_of_samples)
 {
     return new short[nb_of_samples];
 }
-
 
 
 
@@ -69,35 +57,31 @@ void generate_signal(float amplitude, int SampleRate, int nb_of_samples, short* 
 
     int length = str.length();
 
-    // std::ofstream myfile;
-    // myfile.open ("example.csv");
-  
-    for(int k = 0; k < nb_of_samples; k++) {
+    for(int k = 0; k < nb_of_samples; k++) 
+    {
     
-        // std::cout << num_c << std::endl;
         double t = (double)k/(double)SampleRate;
 
-        if (str[num_c] == '0') {
+        if (str[num_c] == '0') 
+        {
             pbuffer[k] = (short)0;
-
         }
-        else if (str[num_c] == '1') {
+
+        else if (str[num_c] == '1') 
+        {
 
             double sin_value = sin((double)(2*3.14*output_frequency*t));
 
             pbuffer[k] = (short)(sin_value*amplitude);
 
         }
-    if (t >= (num_c+1)*output_tick_time) { //when we finish a tick we go to the next character
-        num_c++;
+
+        if (t >= (num_c+1)*output_tick_time)//when we finish a tick we go to the next characte
+        {
+            num_c++;
+        }
+
     }
-
-
-
-        // myfile << t << "," << (int16_t)(amplitude*sin_value/2) << "\n";
-    }
-
-    // myfile.close();
 }
 
 

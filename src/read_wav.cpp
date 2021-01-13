@@ -25,7 +25,8 @@ std::vector<std::string> letters;
 
 std::string result;
 
-Signal::Signal(char* wavpath, float tick)  //read the .wav in wavpath directory and convert it to a string with our nomenclature
+//read the .wav in wavpath directory and convert it to a string with our nomenclature
+Signal::Signal(char* wavpath, float tick) 
 {
     FILE*        pfile;
     char*        mystring;
@@ -72,7 +73,7 @@ Signal::Signal(char* wavpath, float tick)  //read the .wav in wavpath directory 
     signed short int value; //in order to get 16bits signed int and 0 as mean
 
 
-
+    //browsing the data countained in the wav
     for (int i = 0 ; i < nb_ticks ; i++) 
     {
         weight[i] = 0; //reseting the memory just in case
@@ -117,7 +118,7 @@ Signal::Signal(char* wavpath, float tick)  //read the .wav in wavpath directory 
 
 }
 
-Signal::~Signal() {}
+Signal::~Signal() {} //destructor
 
 
 void Signal::letter_separator(void) //separating letters (and spaces too that are considered as letters)
@@ -167,12 +168,14 @@ void Signal::letter_separator(void) //separating letters (and spaces too that ar
     }
 }
 
-void Signal::translate(void) 
+//translates each letter and adding them in a single string
+void Signal::translate(void)
 {
     result = convert_to_alphabet(letters);
 
 }
 
+//printing the string stored in result in terminal and saving it to a file in directory
 void Signal::show_and_save(char* directory)
 {
     std::cout << result << std::endl; //printing the result in terminal

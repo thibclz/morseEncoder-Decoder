@@ -1,18 +1,18 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include "m_to_fr.h"
 
 
+//This function takes a vector of every morse character (stored as string) and convert them to alphabet
 std::string convert_to_alphabet(std::vector<std::string> vect) 
 {
 
     std::string result;
 
-    std::map<std::string, char> m_to_fr;
-    m_to_fr["000"] = ' ';
+    std::map<std::string, char> m_to_fr; //creating the map for alphabet equivalents to morse
+    m_to_fr["000"] = ' '; 
     m_to_fr["10111"] = 'a';
     m_to_fr["111010101"] = 'b';
     m_to_fr["11101011101"] = 'c';

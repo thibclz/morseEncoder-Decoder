@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../include/fr_to_m.h"
+#include "fr_to_m.h"
 
 /*
 This file is the implementation of the program that takes a alphabetic string as argument and outputs a string with the morse code
@@ -14,6 +14,8 @@ between each word on the wiki page of the morse code https://fr.wikipedia.org/wi
 
 By using this method, we can easily find the duration of the output
 */
+
+
 
 //take a text string (alphabetic) and returns it's corresponding string in morse according to the nomenclature above
 std::string convert_to_morse(std::string str) {

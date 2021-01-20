@@ -78,9 +78,16 @@ std::string get_string(char* path) {
 
     char c ;
 
-    while (file.get(c)) { 
-
-        str += c;
+    while (file.get(c)) 
+    { 
+        if (c == '\n') //replacing line break with a space
+        {
+            str += ' '; 
+        }
+        else 
+        {
+            str += c;
+        }
     }
 
     file.close();
